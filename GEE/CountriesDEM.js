@@ -21,9 +21,10 @@ var france = countries.filter(ee.Filter.eq('ADM0_NAME', 'Italy'));
 
 var geometry = france.geometry();
 var geometry = ee.Geometry.Rectangle([92, 9, 110, 23]);
+var elevationVisImg=elevation.updateMask(elevation.gt(0)).visualize(elevationVis)
 // Export the elevation image to Google Drive
 Export.image.toDrive({
-  image: elevation.updateMask(elevation.gt(0)),
+  image: elevationVisImg,
   description: 'elevation_map',
   folder: 'GEE_exports',
   region: geometry,
