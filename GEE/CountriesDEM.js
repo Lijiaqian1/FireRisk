@@ -10,6 +10,7 @@ Map.addLayer(background, {min: 0, max: 1});
 var elevationVis = {
   min: 0,
   max: 2000,
+  palette: ['006633', 'E5FFCC', '662A00', 'D8D8D8', 'F5F5F5'],
 };
 
 // Set elevation <= 0 as transparent and add to the map.
@@ -19,6 +20,7 @@ var countries = ee.FeatureCollection('FAO/GAUL/2015/level0');
 var france = countries.filter(ee.Filter.eq('ADM0_NAME', 'Italy'));
 
 var geometry = france.geometry();
+var geometry = ee.Geometry.Rectangle([92, 9, 110, 23]);
 // Export the elevation image to Google Drive
 Export.image.toDrive({
   image: elevation.updateMask(elevation.gt(0)),
