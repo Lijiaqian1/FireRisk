@@ -5,7 +5,7 @@ var fireMask = dataset.select('FireMask').first(); // 获取第一幅图像，�
 var fireMaskVis = {
   min: 3.0,
   max: 8.0,
-  palette: ['black', 'grey']
+  palette: ['black', 'grey'] // ['blue','green','red'] for color map
 };
 var countries = ee.FeatureCollection('FAO/GAUL/2015/level0'); 
 var italy = countries.filter(ee.Filter.eq('ADM0_NAME', 'Italy')); // 选择意大利
