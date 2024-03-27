@@ -1,5 +1,5 @@
 var dataset = ee.ImageCollection('MODIS/061/MCD12Q1')
-                  .filterDate('2022-01-01', '2022-12-31'); // 过滤 2022 年的数据
+                  .filterDate('2022-01-01', '2022-12-31'); 
 var igbpLandCover = dataset.select('LC_Type1').first();
 var igbpLandCoverVis = {
   min: 1.0,
@@ -17,7 +17,7 @@ var geometry = france.geometry();
 Map.setCenter(6.746, 46.529, 6);
 Map.addLayer(igbpLandCover, igbpLandCoverVis, 'IGBP Land Cover');
 
-// 可视化影像
+
 var igbpLandCoverVisImg = igbpLandCover.visualize(igbpLandCoverVis);
 
 Export.image.toDrive({
