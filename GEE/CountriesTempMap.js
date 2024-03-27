@@ -1,6 +1,6 @@
 var dataset = ee.ImageCollection('MODIS/061/MOD11A2')
-                  .filterDate('2022-05-01', '2022-05-02'); // 过滤五月一号的图像
-var landSurfaceTemperature = dataset.select('LST_Day_1km').first(); // 获取第一幅图像，即五月一号的图像
+                  .filterDate('2022-05-01', '2022-05-02'); 
+var landSurfaceTemperature = dataset.select('LST_Day_1km').first(); 
 
 var landSurfaceTemperatureVis = {
   min: 14000.0,
@@ -13,11 +13,11 @@ var landSurfaceTemperatureVis = {
     'ff0000', 'de0101', 'c21301', 'a71001', '911003'
   ],
 };
- // 加载全球行政区划数据集
+ 
 
 var france = countries.filter(ee.Filter.eq('ADM0_NAME', 'Italy'));
 
-// 提取法国的几何图形
+
 var geometry = france.geometry();
 
 Map.setCenter(6.746, 46.529, 2);
@@ -29,10 +29,10 @@ Export.image.toDrive({
   image: landSurfaceTemperatureVisImg,
   description: 'temperature_map',
   folder: 'GEE_exports',
-  region: geometry, // 指定导出的区域
-  scale: 1000, // 指定导出的分辨率
-  crs: 'EPSG:4326', // 指定投影坐标系
-  maxPixels: 1e13 // 指定最大像素数量
+  region: geometry, 
+  scale: 1000,
+  crs: 'EPSG:4326', 
+  maxPixels: 1e13
 
 });
 
