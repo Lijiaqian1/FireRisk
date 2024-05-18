@@ -1,0 +1,49 @@
+import os
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+
+from google.colab import drive
+drive.mount('/content/gdrive')
+
+
+import datetime
+
+start_date = datetime.date(2022, 1, 1)
+end_date = datetime.date(2022, 12, 31)
+def split_images(image,tile_size):
+    tiles = []
+    for y in range(0, image.shape[0], tile_size):
+        for x in range(0, image.shape[1], tile_size):
+            tile = image[y:y + tile_size, x:x + tile_size]
+
+            tiles.append(tile)
+    return tiles
+for single_date in range((end_date - start_date).days + 1):
+    current_date = start_date + datetime.timedelta(days=single_date)
+    #print(current_date.strftime("%Y_%m_%d"))
+    date_str = current_date.strftime("%Y_%m_%d")
+    file_name = date_str + '_fire_mask.tif'
+    file_path = '/content/gdrive/My Drive/firemasks_2022/' + file_name
+    if not os.path.exists(file_path):
+      continue
+    print(file_path)
+    target_size = (512, 512)
+    firemask_image = cv2.imread(file_path, cv2.IMREAD_UNCHANGED)
+    firemask_image_resized = cv2.resize(firemask_image, target_size)
+
+
+
+
+    # Split the images into tiles
+    tile_size = 128
+    tiles = split_images(firemask_image_resized,tile_size)
+    output_dir = '/content/gdrive/My Drive/firemasks_2022_dates'
+    folder_path = os.path.join(output_dir, date_str)
+    if not os.path.exists(folder_path):
+        os.makedirs(folder_path)
+
+    for i, tile in enumerate(tiles):
+        tile_name = f"tile_{i}.tif"
+        tile_path = os.path.join(folder_path, tile_name)
+        cv2.imwrite(tile_path, tile)
