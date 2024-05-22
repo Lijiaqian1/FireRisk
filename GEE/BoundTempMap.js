@@ -1,6 +1,6 @@
 var dataset = ee.ImageCollection('MODIS/061/MOD11A2')
-                  .filterDate('2022-05-01', '2022-05-02'); // 过滤五月一号的图像
-var landSurfaceTemperature = dataset.select('LST_Day_1km').first(); // 获取第一幅图像，即五月一号的图像
+                  .filterDate('2022-05-01', '2022-05-02'); 
+var landSurfaceTemperature = dataset.select('LST_Day_1km').first(); 
 
 var landSurfaceTemperatureVis = {
   min: 14000.0,
@@ -23,9 +23,9 @@ Export.image.toDrive({
   image: landSurfaceTemperature,
   description: 'temperature_map',
   folder: 'GEE_exports',
-  region: geometry, // 指定导出的区域
-  scale: 1000, // 指定导出的分辨率
-  crs: 'EPSG:4326', // 指定投影坐标系
-  maxPixels: 1e13 // 指定最大像素数量
+  region: geometry, 
+  scale: 1000, 
+  crs: 'EPSG:4326', 
+  maxPixels: 1e13
 });
 
